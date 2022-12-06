@@ -12,9 +12,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-import { Navigate, useNavigate } from 'react-router-dom';
-
-
+import { useNavigate } from 'react-router-dom';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -41,10 +39,11 @@ const theme = createTheme({
 
 function Login() {
   
-
   const [inputId, setInputId] = useState('')
     const [inputPw, setInputPw] = useState('')
- 
+    const [useId, setUseId] = useState(false);
+    const navigate = useNavigate();
+
     const handleInputId = (event) => {
         setInputId(event.currentTarget.value)
     };
@@ -55,32 +54,40 @@ function Login() {
     };
     console.log(inputPw);
 
-    const onClickLogin = () => {
-      console.log('click login')
-      console.log('ID : ', inputId)
-      console.log('PW : ', inputPw)
-      axios.post('http://localhost:3000/onLogin', null, {
-          params: {
-          'user_id': inputId,
-          'password': inputPw
-          }
+    const onClickLogin = (event) => {
+      event.preventDefault();
+      fetch("http://localhost:3001/api/member/login",{
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        method: "GET",
       })
-      .then(res => {
-          console.log(res)
-          if(res == 'success')
-          {
-            alert('로그인 성공')
+      .then((res)=>(res.json()))
+      .then(data=>{
+        for(var i =0; i<data.length; i++){
+          if(inputId ==data[i].user_id){
+            setUseId(true)
+            console.log(useId)
+            alert("로그인 성공")
+            sessionStorage.setItem('user_id',inputId)
+            navigate({
+              pathname:'/home',
+              state:{
+                useId:!(useId),
+                user_id :inputId,
+                password : inputPw
+              }
+            })
+            break;
+          }else{
+            alert("로그인 실패 아직 비밀번호 비교는 안함")
           }
-          document.location.href = '/home'
-          
-          
+        }
       })
-      .catch()
+     
   }
 
-   useEffect(() => {
-       
-   },[])
 
 
   return (

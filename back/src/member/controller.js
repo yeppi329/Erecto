@@ -83,7 +83,6 @@ const onLogin = (req, res) => {
 };
 
 
-
 const gethome = (req,res) =>{  
     res.open( __dirname + "/" + "index.html" );
 };

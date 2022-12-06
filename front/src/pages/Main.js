@@ -29,8 +29,9 @@ const mdTheme = createTheme({
   });
 
 
-export default function Main(props) {
-	const isLogin = props.isLogin
+export default function Main() {
+
+	
   return(
     <ThemeProvider theme={mdTheme}>
 			<Box sx={{ display: 'flex' }}>
@@ -51,7 +52,6 @@ export default function Main(props) {
                 <Toolbar />
                 <Container maxWidth="lg" sx={{ mt: 8, mb: 4 }}>
 				<Routes>
-						<Route path='/' element={<Login />} />
 						<Route path='/home' element={<Home />} />
 						<Route path='/monthlist' element={<MonthlistTable />} />        
 						<Route path='/user/reject' element={<User_Reject />}  />        
