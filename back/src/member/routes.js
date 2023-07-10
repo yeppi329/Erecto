@@ -11,6 +11,7 @@ const router = Router();
 router.get('/',controller.getMembers);
 
 router.get('/login',controller.getMembers);
+router.post('/login',controller.getMembers);
 
 router.post('/onLogin',controller.onLogin);
 module.exports = router;

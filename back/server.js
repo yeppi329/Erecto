@@ -16,6 +16,7 @@ app.get('/',(req,res)=>{
 
 // app.use('/api/v1/members',memberRoutes);
 app.use('/api/member',memberRoutes);
+app.use('/list',homeRoutes);
 //app.use('/api/member/login/home',homeRoutes)
 app.use(express.urlencoded({ extended: false }));
 app.listen(port,()=> console.log(`app listening on port ${port}`));

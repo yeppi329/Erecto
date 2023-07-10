@@ -1,12 +1,5 @@
-
-import axios from 'axios';
-import { NotionRenderer } from "react-notion";
-import React, { useState, useEffect } from 'react';
-import Paper from '@mui/material/Paper';
+import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -14,14 +7,21 @@ import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
+import WindowSharpIcon from '@mui/icons-material/WindowSharp';
+import FormatListBulletedSharpIcon from '@mui/icons-material/FormatListBulletedSharp';
+import ThumbDownSharpIcon from '@mui/icons-material/ThumbDownSharp';
 import IconButton from '@mui/material/IconButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
-import Notion from '../component/Home/Notion';
-import ListItem from '../component/Listitem';
-import Swal from 'sweetalert2'
+import { Box } from '@mui/material';
+import Container from '@mui/material';
+import Grid from '@mui/material';
 
 const mdTheme = createTheme({
   palette: {
@@ -102,8 +102,7 @@ function Main(props) {
   };
 	// App 컴포넌트에서 전달받은 props 값은 아래와 같이 받아온다.
 
-    console.log("localStorage_id ::",localStorage.getItem('user_id'))
-    console.log("localStorage_id_role ::",localStorage.getItem('role'))
+    console.log(localStorage.getItem('user_id'),"sseeeeiiiiooon")
     const onLogout = () => {
       Swal.fire({
         title: '로그아웃',
@@ -124,7 +123,6 @@ function Main(props) {
       // // App 으로 이동(새로고침)
       // document.location.href = '/'
     }
-  
     
     return(
       <ThemeProvider theme={mdTheme}>
@@ -172,8 +170,32 @@ function Main(props) {
           </Toolbar>
           <Divider />
           <List component="nav">
-            <ListItem/>
-          </List>
+                    <ListItemButton href="/home">
+                      <ListItemIcon>
+                        <WindowSharpIcon fontSize="large"/>
+                      </ListItemIcon>
+                      <ListItemText primary="Home" />
+                    </ListItemButton>
+                    <Divider /> 
+                     <ListItemButton href="/month">
+                      <ListItemIcon>
+                        <FormatListBulletedSharpIcon fontSize="large"/>
+                      </ListItemIcon>
+                      <ListItemText primary="Monthlist" />
+                    </ListItemButton>
+                    <ListItemButton  href="/reject">
+                      <ListItemIcon>
+                        <ThumbDownSharpIcon fontSize="large"/>
+                      </ListItemIcon>
+                      <ListItemText primary="Reject" />
+                    </ListItemButton>
+                    <ListItemButton  href="/Mypage">
+                      <ListItemIcon>
+                        <HomeIcon fontSize="large"/>
+                      </ListItemIcon>
+                      <ListItemText primary="Mypage" />
+                    </ListItemButton>
+                </List>  
         </Drawer>
         <Box
           component="main"
@@ -189,9 +211,11 @@ function Main(props) {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid >
+            <Grid container spacing={3}>
               {/* Chart */}
+              <Grid item xs={12} md={8} lg={9}>
                   <Notion />
+              </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>

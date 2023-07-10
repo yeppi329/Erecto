@@ -1,20 +1,10 @@
-const getMembers = "SELECT * FROM member";
-const getMemberById = "SELECT * FROM member WHERE id = $1";
-const getAdmins = "SELECT * FROM member WHERE user_id = $admin"; 
-const checkIdExists = "SELECT m FROM member m WHERE m.user_id = $1";
-const addMember = " INSERT INTO member (user_id,password) VALUES ($1,$2)";
-const removeMember = "DELETE FROM member where id = $1 ";
-const updateMember = "UPDATE member SET user_id = $1 WHERE user_id = $2";
-const checkUser 
-=  "SELECT CASE (SELECT COUNT(*) FROM member WHERE user_id = $1 AND password = $2) WHEN '0' THEN NULL ELSE (SELECT user_id FROM member WHERE user_id = $1 AND password = $2) END AS user_id, CASE (SELECT COUNT(*) FROM member WHERE user_id = $1 AND password = $2) WHEN '0' THEN NULL ELSE (SELECT password FROM memberWHERE user_id = $1 AND password = $2) END AS password";
-const onLogin = "SELECT * FROM member m WHERE (m.user_id = $1 and m.password = $2)";
+const get_user_wl = "select metadata ->> 'label' as label, count(*) from scan_data where metadata ->> 'id'::TEXT = $1 AND created_at created_at >= $2 GROUP BY  metadata ->> 'label', metadata ->> 'id'";
+const total_workload = "select count(*) from scan_data where metadata ->> 'id'::TEXT = $1 GROUP BY metadata ->> 'id'";
+const get_image_list = "select files ->> 'rgb'::TEXT from scan_data where metadata ->> 'id'::TEXT = $1 and metadata ->> 'label'::TEXT = $2 ORDER BY created_at DESC;"
+const get_month_list = "select metadata ->> 'label' as label, count(*) from scan_data where metadata ->> 'id'::TEXT = $1 AND created_at BETWEEN $2 AND $3 GROUP BY metadata ->> 'label'";
 module.exports = {
-    getMembers,
-    getMemberById,
-    checkIdExists,
-    addMember,
-    removeMember,
-    updateMember,
-    checkUser,
-    onLogin,
+    get_user_wl,
+    total_workload,
+    get_image_list,
+    get_month_list,
 };
